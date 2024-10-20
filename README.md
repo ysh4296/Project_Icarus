@@ -38,7 +38,9 @@ Icarus is a web game that applies interactions within a physics system. The game
 ## Making Game
 
 1. bacon game
+
    ![bacon_game](./demo/bacon_game.gif)
 
 2. pinball game
+
    ![chained_game](./demo/chained_game.gif)
