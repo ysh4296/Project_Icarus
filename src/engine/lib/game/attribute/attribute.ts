@@ -23,7 +23,7 @@ export class BounceAttribute extends Attribute {
   hit: Vector;
   constructor() {
     super();
-    this.hit = new Vector({ x: 100, y: -100 });
+    this.hit = new Vector({ x: 500, y: -500 });
   }
 
   apply(target: RigidBody): boolean | Promise<boolean> {

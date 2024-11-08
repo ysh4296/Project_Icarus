@@ -114,7 +114,7 @@ export default class Engine {
     this.grid.refreshGrid(this.objects, this.skillEffect.active);
     this.GameBoard = new Grid(100);
     this.GameBoard.initialize(this.world);
-    this.collisionCache = new CollisionCache(6);
+    this.collisionCache = new CollisionCache(30);
     this.damageText = new DamageText();
     this.particleEffect = new ParticleEffects();
     this.goldGainEffect = new GoldGainEffect();
@@ -255,17 +255,20 @@ export default class Engine {
 
             // this.collisionCache.hasCooldownPassed(object.id, skillFrame.user.id);
 
-            activeSkill.skill.attributes.forEach((attribute) => {
-              if (attribute instanceof BounceAttribute) {
-                if (object.id !== activeSkill.user.object.id) {
-                  attribute.apply(object);
-                  if (result) {
-                    //Skill Cache를 따로 생성하고 {캐릭터} {스킬 id} 의 형태로 스킬 적용캐시를 생성해야 함
-                    this.collisionCache.onCollision(result, object, activeSkill.user.object, 4);
+            if (result) {
+              //Skill Cache를 따로 생성하고 {캐릭터} {스킬 id} 의 형태로 스킬 적용캐시를 생성해야 함
+              if (this.collisionCache.hasCooldownPassed(object.id, activeSkill.id)) {
+                console.log('cached!');
+                console.log(object.id + ' : ' + activeSkill.id);
+                activeSkill.skill.attributes.forEach((attribute) => {
+                  if (attribute instanceof BounceAttribute) {
+                    if (object.id !== activeSkill.user.object.id) {
+                      attribute.apply(object);
+                    }
                   }
-                }
+                });
               }
-            });
+            }
           }
           object.shape.boundingBox.collision = true;
           effect.boundingBox.collision = true;

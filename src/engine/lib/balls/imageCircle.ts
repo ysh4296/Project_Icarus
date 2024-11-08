@@ -21,7 +21,7 @@ export default class ImageCircle extends RigidBody {
 
     this.update = (deltaTime: number) => {
       if (
-        this.shape.collisionTime + registry.engine.collisionCache.cooldown * 2 >
+        this.shape.collisionTime + 12 /** registry.engine.collisionCache.cooldown * 2 */ >
         registry.gameTime
       ) {
         originalUpdate(0);
@@ -34,7 +34,10 @@ export default class ImageCircle extends RigidBody {
      * image circle의 draw 로직은 테스트중이며 전체 game object의 기본 draw 로직으로 적용될 예정입니다.
      */
     this.shape.draw = () => {
-      if (this.shape.collisionTime + registry.engine.collisionCache.cooldown > registry.gameTime) {
+      if (
+        this.shape.collisionTime + 12 /** registry.engine.collisionCache.cooldown  */ >
+        registry.gameTime
+      ) {
         registry.engine.drawUtils.drawCircle(this.shape.centroid, 25, 'white');
         return;
       }

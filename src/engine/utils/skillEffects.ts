@@ -7,6 +7,7 @@ import Shape from '@engine/lib/rigidbody/shape';
 import Vector from '@engine/lib/vector';
 
 export interface SkillFrame {
+  id: number;
   user: Charactor;
   skill: Skill;
   frame: Frame;
@@ -18,16 +19,19 @@ export interface SkillFrame {
  * @todo convert waiting & frame to heapq
  */
 export default class SkillEffects {
+  createdId: number;
   active: SkillFrame[]; // currently activating Skill
   wait: SkillFrame[]; // waiting for activate
 
   constructor() {
+    this.createdId = 0;
     this.active = [];
     this.wait = [];
   }
 
   addFrame(user: Charactor, skill: Skill, frame: Frame) {
     this.wait.push({
+      id: this.createdId,
       user,
       skill,
       frame,

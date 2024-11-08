@@ -20,21 +20,9 @@ export default class RangeSkill extends Skill {
 
   apply(user: Charactor) {
     super.apply(user);
-
-    /**
-     * apply hit effect to engine
-     *
-     * attributes will effect when frame activated!
-     *
-     * do i have to move skill it self to frame?
-     *
-     */
-
-    // console.log('skill applied');
     for (let i = 0; i < this.frames.length; i++) {
       registry.engine.skillEffect.addFrame(user, this, this.frames[i]);
     }
-    // if (this.hasAttribute(BounceAttribute)) {
-    // }
+    registry.engine.skillEffect.createdId++;
   }
 }
