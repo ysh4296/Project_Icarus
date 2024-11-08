@@ -1,6 +1,4 @@
 import { registry } from '@engine/lib/main';
-import RigidBody from '@engine/lib/rigidbody/rigidbody';
-import Shape from '@engine/lib/rigidbody/shape';
 import Charactor from '../charactor';
 
 /**
@@ -9,14 +7,14 @@ import Charactor from '../charactor';
 export default class Frame {
   private skillId: number; // skill id
   private spriteConfiguration: spriteConfiguration; // imformation for getting sprite
-  effectRanges: Shape[];
+  effectRanges: EffectRange[];
   private startDelay: number; // frame will go to wait queue
   private duration: number; // frame will excute effect during duration
   constructor(
     skillId: number,
     startDelay: number,
     duration: number,
-    effectRanges: Shape[],
+    effectRanges: EffectRange[],
     spriteConfiguration: spriteConfiguration,
   ) {
     this.skillId = skillId;
@@ -42,13 +40,11 @@ export default class Frame {
     // this.effectRange.draw();
     // 스킬을 누가썼는지를 알아야 스킬을 어디에 배치할지를 알 수 있음
     if (!user) throw Error('noEntity');
-
-    this.effectRanges.forEach((effectRange) => {
-      registry.sprite.skillDraw(user, new RigidBody(effectRange), this.spriteConfiguration);
-    });
+    registry.sprite.skillDraw(user, this.spriteConfiguration);
   }
 
   /**
+   * @deprecated
    * when skill Frame conflict with charactor
    * @param userId
    * @param targetId

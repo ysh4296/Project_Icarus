@@ -6,10 +6,14 @@ import { registry } from '@engine/lib/main';
 import { subVector } from '@engine/lib/vector';
 
 export default class CollisionCache {
+  /**
+   * @todo change
+   * cache must be store pair <object,skill> not skill frame itself
+   */
   lastCollisionTime: Map<string, number>;
   cooldown: number;
 
-  constructor(cooldown: number = 100) {
+  constructor(cooldown: number = 10000) {
     this.lastCollisionTime = new Map();
     this.cooldown = cooldown; // 쿨다운 시간 (밀리초)
   }
@@ -38,7 +42,7 @@ export default class CollisionCache {
      */
     if (this.hasCooldownPassed(objectA.id, objectB.id)) {
       let collisionVector = subVector(objectA.velocity, objectB.velocity);
-
+      console.log('collide');
       if (!damage) {
         damage = registry.engine.calculatorUtils.clamp(collisionVector.length(), 800, 10);
 

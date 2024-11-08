@@ -114,7 +114,6 @@ export default class Engine {
     this.grid.refreshGrid(this.objects, this.skillEffect.active);
     this.GameBoard = new Grid(100);
     this.GameBoard.initialize(this.world);
-    // this.rustEngine = new rustEngine();
     this.collisionCache = new CollisionCache(6);
     this.damageText = new DamageText();
     this.particleEffect = new ParticleEffects();
@@ -207,27 +206,27 @@ export default class Engine {
       });
     }
 
-    this.skillEffect.active.forEach((skillFrame) => {
-      skillFrame.frame.effectRanges.forEach((effectRange) => {
-        const neighbors = this.grid.getNeighborSkill(effectRange);
-        effectRange.boundingBox.collision = false;
+    this.skillEffect.active.forEach((activeSkill) => {
+      activeSkill.frameShape.forEach((effect) => {
+        const neighbors = this.grid.getNeighborSkill(effect);
+        effect.boundingBox.collision = false;
         /**
          * frame은 스킬의 원형으로 boundingbox가 user의 현위치를 고려하지 않고 계산되고 있습니다.
          * skill frame과 user를 통해 충돌 확인 로직을 구현해야 합니다.
          */
         const userSkillFrame = new BoundingBox();
         userSkillFrame.topLeft = addVector(
-          effectRange.boundingBox.topLeft,
-          skillFrame.user.object.shape.centroid,
+          effect.boundingBox.topLeft,
+          activeSkill.user.object.shape.centroid,
         );
         userSkillFrame.bottomRight = addVector(
-          effectRange.boundingBox.bottomRight,
-          skillFrame.user.object.shape.centroid,
+          effect.boundingBox.bottomRight,
+          activeSkill.user.object.shape.centroid,
         );
 
         for (let i = 0; i < neighbors.length; i++) {
           let object = neighbors[i];
-          if (object.id === skillFrame.user.object.id) {
+          if (object.id === activeSkill.user.object.id) {
             continue;
           }
           if (object.isKinematic) continue;
@@ -235,20 +234,20 @@ export default class Engine {
             // no collision
             continue;
           }
-          const userEffectShape = new Rectangle(skillFrame.user.object.shape.centroid, 0, 0, '');
+          const userEffectShape = new Rectangle(activeSkill.user.object.shape.centroid, 0, 0, '');
           userEffectShape.vertices = [];
           userEffectShape.normals = [];
-          effectRange.vertices.forEach((v) => {
+          effect.vertices.forEach((v) => {
             userEffectShape.vertices.push(new Vector(v));
           });
 
-          effectRange.normals.forEach((v) => {
+          effect.normals.forEach((v) => {
             userEffectShape.normals.push(new Vector(v));
           });
 
-          userEffectShape.centroid = new Vector(effectRange.centroid);
+          userEffectShape.centroid = new Vector(effect.centroid);
 
-          userEffectShape.move(skillFrame.user.object.shape.centroid);
+          userEffectShape.move(activeSkill.user.object.shape.centroid);
 
           let result = this.collision.checkCollision(object.shape, userEffectShape);
           if (result) {
@@ -256,20 +255,20 @@ export default class Engine {
 
             // this.collisionCache.hasCooldownPassed(object.id, skillFrame.user.id);
 
-            skillFrame.skill.attributes.forEach((attribute) => {
+            activeSkill.skill.attributes.forEach((attribute) => {
               if (attribute instanceof BounceAttribute) {
-                if (object.id !== skillFrame.user.object.id) {
+                if (object.id !== activeSkill.user.object.id) {
                   attribute.apply(object);
                   if (result) {
                     //Skill Cache를 따로 생성하고 {캐릭터} {스킬 id} 의 형태로 스킬 적용캐시를 생성해야 함
-                    this.collisionCache.onCollision(result, object, skillFrame.user.object, 4);
+                    this.collisionCache.onCollision(result, object, activeSkill.user.object, 4);
                   }
                 }
               }
             });
           }
           object.shape.boundingBox.collision = true;
-          effectRange.boundingBox.collision = true;
+          effect.boundingBox.collision = true;
         }
       });
     });
@@ -366,13 +365,13 @@ export default class Engine {
     // }
     // registry.sprite.drawSprite();
 
-    this.skillEffect.active.forEach((skillFrame) => {
-      skillFrame.frame.effectRanges.forEach((effectRange) => {
-        effectRange.calculateBoundingBox();
-        const { centroid } = skillFrame.user.object.shape;
+    this.skillEffect.active.forEach((activeSkill) => {
+      activeSkill.frameShape.forEach((effect) => {
+        effect.calculateBoundingBox();
+        const { centroid } = activeSkill.user.object.shape;
         this.drawUtils.ctx.save();
         this.drawUtils.ctx.translate(centroid.x, centroid.y);
-        effectRange.boundingBox.draw();
+        effect.boundingBox.draw();
         this.drawUtils.ctx.restore();
       });
     });

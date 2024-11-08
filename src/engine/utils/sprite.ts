@@ -113,11 +113,7 @@ export default class Sprite {
     registry.engine.drawUtils.ctx.restore();
   }
 
-  skillDraw(
-    user: Charactor,
-    skillEffectComponent: RigidBody,
-    spriteConfiguration: spriteConfiguration,
-  ) {
+  skillDraw(user: Charactor, spriteConfiguration: spriteConfiguration) {
     // 이미지가 로드된 후 작업을 진행
     const spriteWidth = spriteConfiguration.width; // 스프라이트의 너비
     const spriteHeight = spriteConfiguration.height; // 스프라이트의 높이

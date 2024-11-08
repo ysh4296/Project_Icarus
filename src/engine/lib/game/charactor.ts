@@ -51,7 +51,6 @@ export default class Charactor {
       MPRegen: stats.SPI * 0.2 + stats.INT * 0.1,
       CoolDown: stats.AGI * 0.5 + stats.DEX * 0.3 + stats.LCK * 0.2,
     };
-
     return battleStat;
   }
 }

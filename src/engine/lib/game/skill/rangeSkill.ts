@@ -31,16 +31,10 @@ export default class RangeSkill extends Skill {
      */
 
     // console.log('skill applied');
-    this.addFrame(user);
-    // if (this.hasAttribute(BounceAttribute)) {
-    // }
-  }
-
-  addFrame(user: Charactor) {
-    // add events to engine.skillEffects
-    // go to waiting queue
     for (let i = 0; i < this.frames.length; i++) {
       registry.engine.skillEffect.addFrame(user, this, this.frames[i]);
     }
+    // if (this.hasAttribute(BounceAttribute)) {
+    // }
   }
 }

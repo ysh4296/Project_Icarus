@@ -6,20 +6,20 @@ import { SkillFrame } from '@engine/utils/skillEffects';
 
 export default class HashGrid extends Grid {
   hashMap: Map<number, RigidBody[]>;
-  frameHashMap: Map<number, Shape[]>;
+  skillFrameHashMap: Map<number, Shape[]>;
   hashMapSize: number;
   p1Prime: number;
   p2Prime: number;
   objects: RigidBody[];
   skillFrames: SkillFrame[];
   objectsToCells: Map<RigidBody, number[]>; // < object, hashMapKey >
-  framesToCells: Map<Shape, number[]>; // < skillFrame, hashMapKey >
+  skillFramesToCells: Map<Shape, number[]>; // < skillFrame, hashMapKey >
   constructor(cellSize: number) {
     super(cellSize);
     this.hashMap = new Map();
-    this.frameHashMap = new Map();
+    this.skillFrameHashMap = new Map();
     this.objectsToCells = new Map();
-    this.framesToCells = new Map();
+    this.skillFramesToCells = new Map();
 
     this.objects = [];
     this.skillFrames = [];
@@ -46,8 +46,8 @@ export default class HashGrid extends Grid {
   clearGrid() {
     this.hashMap.clear();
     this.objectsToCells.clear();
-    this.frameHashMap.clear();
-    this.framesToCells.clear();
+    this.skillFrameHashMap.clear();
+    this.skillFramesToCells.clear();
   }
 
   cellIndexToHash(x: number, y: number) {
@@ -92,10 +92,9 @@ export default class HashGrid extends Grid {
   }
 
   mapSkillsToCell() {
-    // console.log('maps  start');
     this.skillFrames.forEach((skillFrames) => {
       skillFrames.user;
-      skillFrames.frame.effectRanges.forEach((range, index) => {
+      skillFrames.frameShape.forEach((range, index) => {
         const { topLeft, bottomRight } = range.boundingBox;
         const { centroid } = skillFrames.user.object.shape;
         let leftCellIndex = parseInt(String((topLeft.x + centroid.x) / this.cellSize));
@@ -107,33 +106,16 @@ export default class HashGrid extends Grid {
           for (let y = topCellIndex; y <= bottomCellIndex; y++) {
             let hashIndex = this.cellIndexToHash(x, y);
 
-            // const entries = this.frameHashMap.get(hashIndex);
-            // if (entries === undefined) {
-            //   let newArray = [range];
-            //   this.frameHashMap.set(hashIndex, newArray);
-            // } else {
-            //   entries.push(range);
-            // }
-
-            const cells = this.framesToCells.get(range);
+            const cells = this.skillFramesToCells.get(range);
             // console.log('index  ', hashIndex);
             if (cells === undefined) {
               let newArray = [hashIndex];
-              this.framesToCells.set(range, newArray);
+              this.skillFramesToCells.set(range, newArray);
             } else {
               cells.push(hashIndex);
             }
           }
         }
-
-        // console.log(
-        //   'range',
-        //   skillFrames.user.id,
-        //   '  ',
-        //   index,
-        //   '  :  ',
-        //   this.framesToCells.get(range),
-        // );
       });
     });
   }
@@ -158,7 +140,7 @@ export default class HashGrid extends Grid {
 
   getNeighborSkill(effectRange: Shape) {
     // gridBox는 skill의 현 위치를 계산하기 위해 스킬 프레임과 유저 위치를 조합해서 mapping하고 있습니다.
-    let occupiedCells = this.framesToCells.get(effectRange) ?? [];
+    let occupiedCells = this.skillFramesToCells.get(effectRange) ?? [];
 
     let neighborObjects: RigidBody[] = [];
     for (let i = 0; i < occupiedCells.length; i++) {

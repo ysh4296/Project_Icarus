@@ -31,3 +31,10 @@ interface Equipment {
     [K in keyof Stat]?: Stat[K];
   };
 }
+
+type EffectRange = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};

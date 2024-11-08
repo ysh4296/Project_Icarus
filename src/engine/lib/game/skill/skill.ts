@@ -20,6 +20,11 @@ export default class Skill {
 
   apply(user: Charactor) {
     user.battleStat.MP -= this.cost;
+    /**
+     * @todo
+     * Range Skill: add skill Frame
+     * Projectile Skill: add projectile object
+     */
   }
 
   setTarget() {}
@@ -33,7 +38,6 @@ export default class Skill {
     //   attr.getTargetBenefitScore(user, !attr.selfTarget ? target : user, this) *
     //   (target !== user && attr.selfTarget ? -1 : 1);
     // }
-
     return score;
   }
 
