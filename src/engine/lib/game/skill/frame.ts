@@ -1,4 +1,5 @@
 import { registry } from '@engine/lib/main';
+import Vector from '@engine/lib/vector';
 import Charactor from '../charactor';
 
 /**
@@ -32,7 +33,7 @@ export default class Frame {
     return this.duration + this.startDelay + addTime > registry.gameTime;
   }
 
-  draw(user: Charactor) {
+  draw(user: Charactor, target: Vector) {
     /**
      * @todo skill sprite draw
      * draw with spriteConfiguration
@@ -40,7 +41,7 @@ export default class Frame {
     // this.effectRange.draw();
     // 스킬을 누가썼는지를 알아야 스킬을 어디에 배치할지를 알 수 있음
     if (!user) throw Error('noEntity');
-    registry.sprite.skillDraw(user, this.spriteConfiguration);
+    registry.sprite.skillDraw(user, this.spriteConfiguration, target);
   }
 
   /**

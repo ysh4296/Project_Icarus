@@ -9,8 +9,9 @@ const skillFrame: Frame[][] = [];
 
 export const initSkillData = () => {
   skillData.push(new RangeSkill(0).addAttribute(BounceAttribute));
+
   skillFrame.push([
-    new Frame(0, 0, 6, [{ x: -50, y: 25, width: 20, height: 50 }], {
+    new Frame(0, 0, 6, [{ x: -50, y: 85, width: 20, height: 50 }], {
       source: '/skillEffect/Horizontal_Slash.png',
       width: 48,
       height: 48,
@@ -22,9 +23,9 @@ export const initSkillData = () => {
       6,
       6,
       [
-        { x: -50, y: 20, width: 20, height: 50 },
-        { x: -35, y: -25, width: 20, height: 50 },
-        { x: 0, y: -60, width: 50, height: 20 },
+        { x: -50, y: 80, width: 20, height: 50 },
+        { x: -35, y: 35, width: 20, height: 50 },
+        { x: 0, y: 0, width: 50, height: 20 },
       ],
       {
         source: '/skillEffect/Horizontal_Slash.png',
@@ -39,8 +40,8 @@ export const initSkillData = () => {
       12,
       12,
       [
-        { x: 0, y: -60, width: 50, height: 20 },
-        { x: 35, y: -25, width: 20, height: 50 },
+        { x: 0, y: 0, width: 50, height: 20 },
+        { x: 35, y: 35, width: 20, height: 50 },
       ],
       {
         source: '/skillEffect/Horizontal_Slash.png',
@@ -50,7 +51,7 @@ export const initSkillData = () => {
         column: 2,
       },
     ),
-    new Frame(0, 24, 6, [{ x: 50, y: 20, width: 20, height: 20 }], {
+    new Frame(0, 24, 6, [{ x: 50, y: 80, width: 20, height: 20 }], {
       source: '/skillEffect/Horizontal_Slash.png',
       width: 48,
       height: 48,

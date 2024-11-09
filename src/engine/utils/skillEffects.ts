@@ -4,7 +4,7 @@ import Skill from '@engine/lib/game/skill/skill';
 import { registry } from '@engine/lib/main';
 import Rectangle from '@engine/lib/rigidbody/rectangle';
 import Shape from '@engine/lib/rigidbody/shape';
-import Vector from '@engine/lib/vector';
+import Vector, { subVector } from '@engine/lib/vector';
 
 export interface SkillFrame {
   id: number;
@@ -13,6 +13,7 @@ export interface SkillFrame {
   frame: Frame;
   frameShape: Shape[];
   addTime: number;
+  target: Vector;
 }
 
 /**
@@ -29,22 +30,31 @@ export default class SkillEffects {
     this.wait = [];
   }
 
-  addFrame(user: Charactor, skill: Skill, frame: Frame) {
+  addFrame(user: Charactor, skill: Skill, frame: Frame, target: Vector) {
+    const newAngle = registry.engine.calculatorUtils.getAngleBetweenVectors(
+      new Vector({ x: 0, y: 1 }),
+      target,
+    );
     this.wait.push({
       id: this.createdId,
       user,
       skill,
       frame,
-      frameShape: frame.effectRanges.map(
-        (effectRange) =>
-          new Rectangle(
-            new Vector({ x: effectRange.x, y: effectRange.y }),
-            effectRange.width,
-            effectRange.height,
-            'black',
-          ),
-      ),
+      frameShape: frame.effectRanges.map((effectRange) => {
+        const newVector = new Vector({ x: effectRange.x, y: effectRange.y });
+        newVector.rotate(newAngle);
+
+        const shape = new Rectangle(
+          subVector(newVector, target),
+          effectRange.width,
+          effectRange.height,
+          'black',
+        );
+        shape.rotate(newAngle);
+        return shape;
+      }),
       addTime: registry.gameTime,
+      target,
     });
   }
 
@@ -62,6 +72,6 @@ export default class SkillEffects {
   }
 
   draw() {
-    this.active.forEach((skillFrame) => skillFrame.frame.draw(skillFrame.user));
+    this.active.forEach((skillFrame) => skillFrame.frame.draw(skillFrame.user, skillFrame.target));
   }
 }

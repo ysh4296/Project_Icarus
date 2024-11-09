@@ -1,3 +1,4 @@
+import Vector from '@engine/lib/vector';
 import Charactor from '../charactor';
 import Skill from './skill';
 
@@ -6,8 +7,8 @@ export default class ProjectileSkill extends Skill {
     super(id);
   }
 
-  apply(user: Charactor) {
-    super.apply(user);
+  apply(user: Charactor, target: Vector) {
+    super.apply(user, target);
 
     // add projectile
     this.addProjectile([]);

@@ -1,7 +1,7 @@
 import Charactor from '@engine/lib/game/charactor';
 import { registry } from '@engine/lib/main';
 import RigidBody from '@engine/lib/rigidbody/rigidbody';
-import Vector, { rotateVector, subVector } from '@engine/lib/vector';
+import Vector, { addVector, rotateVector, subVector } from '@engine/lib/vector';
 
 // load image await https://stackoverflow.com/questions/46399223/async-await-in-image-loading
 export default class Sprite {
@@ -18,27 +18,7 @@ export default class Sprite {
   ) {
     this.spriteSheet.src = src;
     this.skillSpriteSheet.src = '/skillEffect/Horizontal_Slash.png';
-    // this.skillSpriteSheet.src = src;
-    // await this.loadImage(this.spriteSheet);
-    console.log('ru1');
-    // await this.loadImage(this.skillSpriteSheet);
-    console.log('ru2');
   }
-
-  // 이미지를 Promise로 로드하는 비동기 함수
-  // loadImage(img: HTMLImageElement): Promise<void> {
-  //   console.log('load');
-  //   return new Promise((resolve, reject) => {
-  //     img.onload = () => {
-  //       console.log('loadCompleted');
-  //       resolve();
-  //     };
-  //     img.onerror = (err) => {
-  //       console.error(`Failed to load image: ${img.src}`, err);
-  //       reject(err);
-  //     };
-  //   });
-  // }
 
   drawSprite(rotation?: number, translation?: Vector) {
     // 이미지가 로드된 후 작업을 진행
@@ -113,7 +93,7 @@ export default class Sprite {
     registry.engine.drawUtils.ctx.restore();
   }
 
-  skillDraw(user: Charactor, spriteConfiguration: spriteConfiguration) {
+  skillDraw(user: Charactor, spriteConfiguration: spriteConfiguration, target: Vector) {
     // 이미지가 로드된 후 작업을 진행
     const spriteWidth = spriteConfiguration.width; // 스프라이트의 너비
     const spriteHeight = spriteConfiguration.height; // 스프라이트의 높이
@@ -121,13 +101,23 @@ export default class Sprite {
     const col = spriteConfiguration.column;
     const row = spriteConfiguration.row;
 
-    let rotation = 0;
+    const newAngle = registry.engine.calculatorUtils.getAngleBetweenVectors(
+      new Vector({ x: 0, y: 1 }),
+      target,
+    );
+
+    let rotation = newAngle;
     let translation = new Vector({ x: 0, y: 0 });
 
-    rotation = user.object.shape.orientation - Math.PI / 2;
-    translation = subVector(
-      user.object.shape.centroid,
-      rotateVector(new Vector({ x: 100, y: 100 }), rotation),
+    rotation += user.object.shape.orientation - Math.PI / 2;
+    /**
+     * @todo
+     * skill sprite에 따른 sprite 조정 offset을 저장하는 방법 찾아내기
+     * 아마 skill || frame 둘중 하나에 저장해야 할듯함
+     */
+    translation = addVector(
+      subVector(user.object.shape.centroid, target),
+      rotateVector(new Vector({ x: -100, y: 160 }), newAngle),
     );
 
     registry.engine.drawUtils.ctx.save();

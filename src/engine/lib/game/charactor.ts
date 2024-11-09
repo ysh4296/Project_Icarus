@@ -27,12 +27,12 @@ export default class Charactor {
   update() {
     this.battleStat.MP += this.battleStat.MPRegen;
     this.battleStat.HP += this.battleStat.HPRegen;
-
     if (this.skill.cost < this.battleStat.MP) {
       // execute Skill
       if (this.skill.canApply()) {
-        this.skill.setTarget();
-        this.skill.apply(this);
+        const target = this.skill.setTarget(this, this.skill.limit);
+        if (target === null) return;
+        this.skill.apply(this, target);
       }
     }
   }

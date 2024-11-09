@@ -263,7 +263,7 @@ export default class Engine {
                 activeSkill.skill.attributes.forEach((attribute) => {
                   if (attribute instanceof BounceAttribute) {
                     if (object.id !== activeSkill.user.object.id) {
-                      attribute.apply(object);
+                      attribute.apply(activeSkill.user, object);
                     }
                   }
                 });
