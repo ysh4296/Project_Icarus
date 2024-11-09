@@ -151,12 +151,11 @@ export default class Collision {
   }
 
   circleVSpolygon(circle: Circle, polygon: Polygon) {
-    let contact = this.circleVSpolgonEdges(circle, polygon);
-    if (contact) {
-      return contact;
-    } else {
-      return this.circleVSpolygonCorner(circle, polygon);
-    }
+    return (
+      this.circleVSpolgonEdges(circle, polygon) ||
+      this.circleVSpolygonCorner(circle, polygon) ||
+      this.circleVSpolygonInclude(circle, polygon)
+    );
   }
 
   circleVSpolgonEdges(circle: Circle, polygon: Polygon) {
@@ -214,6 +213,16 @@ export default class Collision {
         let penetrationDepth = circle.radius - distance;
         return new CollisionManifold(penetrationDepth, direction, penetrationPoint);
       }
+    }
+    return null;
+  }
+
+  circleVSpolygonInclude(circle: Circle, polygon: Polygon) {
+    let length = subVector(circle.centroid, polygon.centroid).length();
+    if (length < circle.radius) {
+      let penetrationPoint = polygon.centroid;
+      let penetrationDepth = length;
+      return new CollisionManifold(penetrationDepth, new Vector({ x: 0, y: 0 }), penetrationPoint);
     }
     return null;
   }

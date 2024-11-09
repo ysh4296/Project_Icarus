@@ -250,24 +250,28 @@ export default class Engine {
           userEffectShape.move(activeSkill.user.object.shape.centroid);
 
           let result = this.collision.checkCollision(object.shape, userEffectShape);
+
           if (result) {
             /** skill applied */
 
             // this.collisionCache.hasCooldownPassed(object.id, skillFrame.user.id);
 
-            if (result) {
-              //Skill Cache를 따로 생성하고 {캐릭터} {스킬 id} 의 형태로 스킬 적용캐시를 생성해야 함
-              if (this.collisionCache.hasCooldownPassed(object.id, activeSkill.id)) {
-                console.log('cached!');
-                console.log(object.id + ' : ' + activeSkill.id);
-                activeSkill.skill.attributes.forEach((attribute) => {
-                  if (attribute instanceof BounceAttribute) {
-                    if (object.id !== activeSkill.user.object.id) {
-                      attribute.apply(activeSkill.user, object);
-                    }
+            //Skill Cache를 따로 생성하고 {캐릭터} {스킬 id} 의 형태로 스킬 적용캐시를 생성해야 함
+            if (
+              this.collisionCache.hasCooldownPassed(
+                object.id.toString(),
+                'skill ' + activeSkill.id.toString(),
+              )
+            ) {
+              console.log('cached!');
+              console.log(object.id + ' : ' + activeSkill.id);
+              activeSkill.skill.attributes.forEach((attribute) => {
+                if (attribute instanceof BounceAttribute) {
+                  if (object.id !== activeSkill.user.object.id) {
+                    attribute.apply(activeSkill.user, object);
                   }
-                });
-              }
+                }
+              });
             }
           }
           object.shape.boundingBox.collision = true;

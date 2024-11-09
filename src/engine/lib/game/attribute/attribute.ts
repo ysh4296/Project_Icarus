@@ -33,6 +33,7 @@ export class BounceAttribute extends Attribute {
       subVector(user.object.shape.centroid, targetMonster.shape.centroid),
     );
     targetMonster.velocity.add(rotateVector(this.hit, newAngle));
+    console.log('arrtibute applied');
     return true;
   }
 }

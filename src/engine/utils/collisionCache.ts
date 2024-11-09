@@ -14,7 +14,7 @@ export default class CollisionCache {
     this.cooldown = cooldown; // 쿨다운 시간 (밀리초)
   }
 
-  hasCooldownPassed(id1: number, id2: number): boolean {
+  hasCooldownPassed(id1: string, id2: string): boolean {
     if (id1 > id2) {
       [id1, id2] = [id2, id1];
     }
@@ -33,7 +33,7 @@ export default class CollisionCache {
   }
 
   onCollision(result: CollisionManifold, objectA: RigidBody, objectB: RigidBody, damage?: number) {
-    if (this.hasCooldownPassed(objectA.id, objectB.id)) {
+    if (this.hasCooldownPassed(objectA.id.toString(), objectB.id.toString())) {
       let collisionVector = subVector(objectA.velocity, objectB.velocity);
       if (!damage) {
         damage = registry.engine.calculatorUtils.clamp(collisionVector.length(), 800, 10);

@@ -63,7 +63,7 @@ const main = (document: Document, setMouseEventType: (mouseType: MouseType) => v
         const object = levelData.shift();
         if (object) {
           for (let i = 0; i < object.numbers; i++) {
-            const monster = new Monster(object.position, 20000);
+            const monster = new Monster(object.position, 200);
             registry.engine.objects.push(monster);
           }
         }
