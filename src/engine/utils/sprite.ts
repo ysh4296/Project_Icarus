@@ -93,7 +93,12 @@ export default class Sprite {
     registry.engine.drawUtils.ctx.restore();
   }
 
-  skillDraw(user: Charactor, spriteConfiguration: spriteConfiguration, target: Vector) {
+  skillDraw(
+    user: Charactor,
+    spriteConfiguration: spriteConfiguration,
+    target: Vector,
+    drawOffset: Vector,
+  ) {
     // 이미지가 로드된 후 작업을 진행
     const spriteWidth = spriteConfiguration.width; // 스프라이트의 너비
     const spriteHeight = spriteConfiguration.height; // 스프라이트의 높이
@@ -110,14 +115,10 @@ export default class Sprite {
     let translation = new Vector({ x: 0, y: 0 });
 
     rotation += user.object.shape.orientation - Math.PI / 2;
-    /**
-     * @todo
-     * skill sprite에 따른 sprite 조정 offset을 저장하는 방법 찾아내기
-     * 아마 skill || frame 둘중 하나에 저장해야 할듯함
-     */
+
     translation = addVector(
       subVector(user.object.shape.centroid, target),
-      rotateVector(new Vector({ x: -100, y: 160 }), newAngle),
+      rotateVector(drawOffset, newAngle),
     );
 
     registry.engine.drawUtils.ctx.save();

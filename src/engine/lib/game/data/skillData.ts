@@ -1,3 +1,4 @@
+import Vector from '@engine/lib/vector';
 import { BounceAttribute } from '../attribute/attribute';
 import Frame from '../skill/frame';
 import RangeSkill from '../skill/rangeSkill';
@@ -11,13 +12,20 @@ export const initSkillData = () => {
   skillData.push(new RangeSkill(0).addAttribute(BounceAttribute));
 
   skillFrame.push([
-    new Frame(0, 0, 6, [{ x: -50, y: 85, width: 20, height: 50 }], {
-      source: '/skillEffect/Horizontal_Slash.png',
-      width: 48,
-      height: 48,
-      row: 0,
-      column: 0,
-    }),
+    new Frame(
+      0,
+      0,
+      6,
+      [{ x: -50, y: 85, width: 20, height: 50 }],
+      {
+        source: '/skillEffect/Horizontal_Slash.png',
+        width: 48,
+        height: 48,
+        row: 0,
+        column: 0,
+      },
+      new Vector({ x: -100, y: 160 }),
+    ),
     new Frame(
       0,
       6,
@@ -34,6 +42,7 @@ export const initSkillData = () => {
         row: 0,
         column: 1,
       },
+      new Vector({ x: -100, y: 160 }),
     ),
     new Frame(
       0,
@@ -50,21 +59,36 @@ export const initSkillData = () => {
         row: 0,
         column: 2,
       },
+      new Vector({ x: -100, y: 160 }),
     ),
-    new Frame(0, 24, 6, [{ x: 50, y: 80, width: 20, height: 20 }], {
-      source: '/skillEffect/Horizontal_Slash.png',
-      width: 48,
-      height: 48,
-      row: 0,
-      column: 3,
-    }),
-    new Frame(0, 30, 6, [], {
-      source: '/skillEffect/Horizontal_Slash.png',
-      width: 48,
-      height: 48,
-      row: 0,
-      column: 4,
-    }),
+    new Frame(
+      0,
+      24,
+      6,
+      [{ x: 50, y: 80, width: 20, height: 20 }],
+      {
+        source: '/skillEffect/Horizontal_Slash.png',
+        width: 48,
+        height: 48,
+        row: 0,
+        column: 3,
+      },
+      new Vector({ x: -100, y: 160 }),
+    ),
+    new Frame(
+      0,
+      30,
+      6,
+      [],
+      {
+        source: '/skillEffect/Horizontal_Slash.png',
+        width: 48,
+        height: 48,
+        row: 0,
+        column: 4,
+      },
+      new Vector({ x: -100, y: 160 }),
+    ),
   ]);
 
   skillData.forEach((skillData) => {

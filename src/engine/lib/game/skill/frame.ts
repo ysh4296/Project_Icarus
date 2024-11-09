@@ -5,24 +5,28 @@ import Charactor from '../charactor';
 /**
  * activated skill frames
  */
+
 export default class Frame {
   private skillId: number; // skill id
   private spriteConfiguration: spriteConfiguration; // imformation for getting sprite
   effectRanges: EffectRange[];
   private startDelay: number; // frame will go to wait queue
   private duration: number; // frame will excute effect during duration
+  private drawOffset: Vector;
   constructor(
     skillId: number,
     startDelay: number,
     duration: number,
     effectRanges: EffectRange[],
     spriteConfiguration: spriteConfiguration,
+    drawOffset: Vector,
   ) {
     this.skillId = skillId;
     this.effectRanges = effectRanges;
     this.startDelay = startDelay;
     this.duration = duration; // 120 frame
     this.spriteConfiguration = spriteConfiguration;
+    this.drawOffset = drawOffset;
   }
 
   isWait(addTime: number): boolean {
@@ -41,7 +45,7 @@ export default class Frame {
     // this.effectRange.draw();
     // 스킬을 누가썼는지를 알아야 스킬을 어디에 배치할지를 알 수 있음
     if (!user) throw Error('noEntity');
-    registry.sprite.skillDraw(user, this.spriteConfiguration, target);
+    registry.sprite.skillDraw(user, this.spriteConfiguration, target, this.drawOffset);
   }
 
   /**
@@ -70,6 +74,7 @@ export default class Frame {
       this.duration,
       [...this.effectRanges], // Deep copy the effectRanges array
       { ...this.spriteConfiguration }, // Assuming spriteConfiguration is an object, create a shallow copy
+      this.drawOffset,
     );
   }
 }
