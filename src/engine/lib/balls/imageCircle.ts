@@ -5,8 +5,11 @@ import { registry } from '@engine/lib/main';
 
 export default class ImageCircle extends RigidBody {
   state: CharactorState;
+  // animation: Animation;
   frameNumber: number;
   frameOffset: number;
+  stunDuration: number;
+  hp: number;
 
   constructor(position: Vector) {
     super(
@@ -14,10 +17,17 @@ export default class ImageCircle extends RigidBody {
       0.04,
     );
     this.state = 'idle';
+    this.hp = 200;
     this.frameNumber = 0;
     this.frameOffset = 0;
+    this.stunDuration = 0;
 
     const originalUpdate = this.update.bind(this);
+
+    /**
+     * @todo
+     * collision시에 피격이팩트를 넣는게 아니라 피격일 시 행동양식을 함수로 구현하기
+     */
 
     this.update = (deltaTime: number) => {
       if (
@@ -75,4 +85,12 @@ export default class ImageCircle extends RigidBody {
       }
     };
   }
+
+  onDamage = (damage: number, point: Vector) => {
+    // this.state = 'damage';
+    this.stunDuration = 12;
+    this.hp -= damage;
+
+    registry.engine.damageText.addDamageText(point.x, point.y, damage);
+  };
 }

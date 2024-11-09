@@ -7,14 +7,14 @@ import Charactor from '../charactor';
 export default class Skill {
   public id: number;
   public cost: number;
-  public limit: number;
+  public limit: number; // 스킬범위
   description?: string;
   public attributes: Attribute[]; // special traits for skill use it with apply
   user: any;
 
   constructor(id: number) {
     this.id = id;
-    this.cost = 100;
+    this.cost = 20;
     this.limit = 10000;
     this.attributes = [];
   }
@@ -50,6 +50,10 @@ export default class Skill {
       }
     });
     if (minLength === limit) return null;
+    /**
+     * @todo
+     * predict target's position for improved targetting
+     */
     return target;
   }
 

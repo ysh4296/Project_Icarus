@@ -3,7 +3,7 @@ import Monster from '@engine/lib/component/defense/monster';
 import ImageCircle from '@engine/lib/balls/imageCircle';
 import CollisionManifold from './collisionManifold';
 import { registry } from '@engine/lib/main';
-import { subVector } from '@engine/lib/vector';
+import Vector, { subVector } from '@engine/lib/vector';
 
 export default class CollisionCache {
   lastCollisionTime: Map<string, number>;
@@ -58,16 +58,17 @@ export default class CollisionCache {
           this.lastCollisionTime.get(key) || 0,
         );
         // objectA.velocity.scale(0.8);
-        registry.engine.damageText.addDamageText(
-          (result.penetrationPoint.x + objectA.shape.centroid.x) / 2,
-          (result.penetrationPoint.y + objectA.shape.centroid.y) / 2,
-          damage,
-        );
 
         // damaging
         const targetMonster = registry.engine.objects.find((object) => object.id === objectA.id);
         if (targetMonster instanceof Monster) {
-          targetMonster.hp -= damage;
+          objectA.onDamage(
+            damage,
+            new Vector({
+              x: (result.penetrationPoint.x + objectA.shape.centroid.x) / 2,
+              y: (result.penetrationPoint.y + objectA.shape.centroid.y) / 2,
+            }),
+          );
         }
       }
 
@@ -83,16 +84,17 @@ export default class CollisionCache {
         );
 
         // objectB.velocity.scale(0.8);
-        registry.engine.damageText.addDamageText(
-          (result.penetrationPoint.x + objectB.shape.centroid.x) / 2,
-          (result.penetrationPoint.y + objectB.shape.centroid.y) / 2,
-          damage,
-        );
 
         // damaging
         const targetMonster = registry.engine.objects.find((object) => object.id === objectB.id);
         if (targetMonster instanceof Monster) {
-          targetMonster.hp -= damage;
+          objectB.onDamage(
+            damage,
+            new Vector({
+              x: (result.penetrationPoint.x + objectB.shape.centroid.x) / 2,
+              y: (result.penetrationPoint.y + objectB.shape.centroid.y) / 2,
+            }),
+          );
         }
       }
     }

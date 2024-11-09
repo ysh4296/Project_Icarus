@@ -4,6 +4,12 @@ import RigidBody from '@engine/lib/rigidbody/rigidbody';
 import Vector, { addVector, rotateVector, subVector } from '@engine/lib/vector';
 
 // load image await https://stackoverflow.com/questions/46399223/async-await-in-image-loading
+
+/**
+ * @todo
+ * 필요한만큼 sprite 선언 가능하도록 변경
+ */
+
 export default class Sprite {
   spriteSheet: HTMLImageElement;
   skillSpriteSheet: HTMLImageElement;

@@ -1,5 +1,6 @@
+import { SKILL } from '@engine/lib/enum/skill';
 import Vector from '@engine/lib/vector';
-import { BounceAttribute } from '../attribute/attribute';
+import { BounceAttribute, DamageAttribute } from '../attribute/attribute';
 import Frame from '../skill/frame';
 import RangeSkill from '../skill/rangeSkill';
 import Skill from '../skill/skill';
@@ -9,7 +10,11 @@ export const skillData: Skill[] = [];
 const skillFrame: Frame[][] = [];
 
 export const initSkillData = () => {
-  skillData.push(new RangeSkill(0).addAttribute(BounceAttribute));
+  skillData.push(
+    new RangeSkill(SKILL.HORIZONTAL_SLASH)
+      .addAttribute(DamageAttribute)
+      .addAttribute(BounceAttribute),
+  );
 
   skillFrame.push([
     new Frame(

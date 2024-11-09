@@ -22,7 +22,7 @@ import GoldGainEffect from '@engine/utils/goldGainEffect';
 import skillEffects from '@engine/utils/skillEffects';
 import Charactor from './game/charactor';
 import BoundingBox from '@engine/grid/boundingBox';
-import { BounceAttribute } from './game/attribute/attribute';
+import { BounceAttribute, DamageAttribute } from './game/attribute/attribute';
 // import { Engine as rustEngine } from '../../../rust-module/pkg/rust_module';
 
 export default class Engine {
@@ -263,11 +263,14 @@ export default class Engine {
                 'skill ' + activeSkill.id.toString(),
               )
             ) {
-              console.log('cached!');
-              console.log(object.id + ' : ' + activeSkill.id);
               activeSkill.skill.attributes.forEach((attribute) => {
+                if (attribute instanceof DamageAttribute) {
+                  if (object.id !== activeSkill.user.object.id && object instanceof Monster) {
+                    attribute.apply(activeSkill.user, object);
+                  }
+                }
                 if (attribute instanceof BounceAttribute) {
-                  if (object.id !== activeSkill.user.object.id) {
+                  if (object.id !== activeSkill.user.object.id && object instanceof Monster) {
                     attribute.apply(activeSkill.user, object);
                   }
                 }
@@ -378,7 +381,7 @@ export default class Engine {
         const { centroid } = activeSkill.user.object.shape;
         this.drawUtils.ctx.save();
         this.drawUtils.ctx.translate(centroid.x, centroid.y);
-        effect.boundingBox.draw();
+        // effect.boundingBox.draw();
         this.drawUtils.ctx.restore();
       });
     });

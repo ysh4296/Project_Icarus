@@ -16,7 +16,7 @@
   },
   "overrides": [
     {
-      "files": ["*.d.ts"],
+      "files": ["*.d.ts", "**/enum/*"],
       "rules": {
         "no-unused-vars": "off"
       }

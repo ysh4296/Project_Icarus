@@ -1,7 +1,11 @@
 import { registry } from '@engine/lib/main';
 import Vector from '@engine/lib/vector';
 
-// 전체 애니메이션 정보를 로드하고, looped animation을 실행합니다.
+/**
+ * @todo
+ * 필요한만큼 animation 선언 가능하도록 변경
+ */
+
 export default class Animation {
   spriteSheet: HTMLImageElement;
   animationConfig: CharactorAnimationConfig;
@@ -14,7 +18,7 @@ export default class Animation {
      * read json Data
      */
     this.animationConfig = {
-      graphic: 'Fireball.png',
+      graphic: 'Fireball',
       frames: {
         idle: [
           {

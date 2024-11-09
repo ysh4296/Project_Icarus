@@ -2,6 +2,11 @@ import Matter from '@engine/lib/matter';
 import Vector from '../../vector';
 import ImageCircle from '@engine/lib/balls/imageCircle';
 
+/**
+ * @deprecated
+ * @todo
+ * Convert ImageCircle to monster
+ */
 export default class Monster extends ImageCircle {
   hp: number;
   constructor(position: Vector, hp: number) {

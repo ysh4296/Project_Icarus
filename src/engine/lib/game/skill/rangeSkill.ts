@@ -12,8 +12,7 @@ export default class RangeSkill extends Skill {
   constructor(id: number) {
     super(id);
     this.frames = [];
-    this.limit = 500;
-    console.log('init Range Skill', this);
+    this.limit = 200;
   }
 
   setFrame(frames: Frame[]) {
