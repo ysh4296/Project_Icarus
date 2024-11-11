@@ -9,6 +9,7 @@ import Matter from '@engine/lib/matter';
 import Charactor from '@engine/lib/game/charactor';
 import Circle from '@engine/lib/rigidbody/circle';
 import { skillData } from '@engine/lib/game/data/skillData';
+import { SKILL } from '@engine/lib/enum/skill';
 
 export default class CreateMouse {
   start: Vector;
@@ -94,9 +95,6 @@ export default class CreateMouse {
           row: 0,
           column: 0,
         };
-        magician.shape.draw = () => {
-          registry.sprite.newDrawSprite(magician, spriteConfiguration);
-        };
 
         registry.engine.objects.push(magician);
         const magicianCharactor = new Charactor(
@@ -110,9 +108,17 @@ export default class CreateMouse {
             AGI: 5,
             SPI: 5,
           },
-          skillData[0],
+          skillData[SKILL.HORIZONTAL_SLASH],
           magician,
         );
+        magician.shape.draw = () => {
+          registry.sprite.newDrawSprite(magician, spriteConfiguration);
+          registry.engine.drawUtils.drawPoint(
+            magician.shape.centroid,
+            magicianCharactor.skill.limit,
+            'blue',
+          );
+        };
         // magicianCharactor.battleStat.MP = 1000000;
         registry.engine.charactorMap.set(magician.id, magicianCharactor);
         break;

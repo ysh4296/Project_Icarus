@@ -12,12 +12,6 @@ export default class Shape {
   anchorPoints: Map<number, Vector>;
   normals: Vector[];
   orientation: number;
-  /**
-   * @todo
-   * collision Time으로 충돌여부를 shape에 저장하는건 잘못되었음
-   * charactor 객체나 monster 객체에서 문제를 해결해야함
-   */
-  collisionTime: number;
 
   constructor(vertices: Vector[], color: string) {
     this.calculatorUtils = Calculator.getInstance();
@@ -31,7 +25,6 @@ export default class Shape {
       throw new TypeError("Cannot construct abstract instances directly of Class 'Shape'");
     }
     this.anchorPoints = new Map();
-    this.collisionTime = -Infinity;
   }
 
   setCentroid(position: Vector) {

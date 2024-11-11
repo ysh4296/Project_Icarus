@@ -46,17 +46,17 @@ export default class CollisionCache {
       if (id1 > id2) {
         [id1, id2] = [id2, id1];
       }
-      const key = `${id1}-${id2}`;
+
       if (objectA instanceof ImageCircle) {
         /**
          *  object A glowing
          *  glowed by objectA, objectB collision
          */
         // console.log('update : ', objectA.shape.collisionTime);
-        objectA.shape.collisionTime = Math.max(
-          objectA.shape.collisionTime,
-          this.lastCollisionTime.get(key) || 0,
-        );
+        // objectA.shape.collisionTime = Math.max(
+        //   objectA.shape.collisionTime,
+        //   this.lastCollisionTime.get(key) || 0,
+        // );
         // objectA.velocity.scale(0.8);
 
         // damaging
@@ -78,10 +78,10 @@ export default class CollisionCache {
          *  glowed by objectA, objectB collision
          */
 
-        objectB.shape.collisionTime = Math.max(
-          objectB.shape.collisionTime,
-          this.lastCollisionTime.get(key) || 0,
-        );
+        // objectB.shape.collisionTime = Math.max(
+        //   objectB.shape.collisionTime,
+        //   this.lastCollisionTime.get(key) || 0,
+        // );
 
         // objectB.velocity.scale(0.8);
 

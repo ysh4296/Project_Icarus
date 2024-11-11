@@ -11,7 +11,7 @@ const skillFrame: Frame[][] = [];
 
 export const initSkillData = () => {
   skillData.push(
-    new RangeSkill(SKILL.HORIZONTAL_SLASH)
+    new RangeSkill(SKILL.HORIZONTAL_SLASH, 100)
       .addAttribute(DamageAttribute)
       .addAttribute(BounceAttribute),
   );

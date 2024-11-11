@@ -23,8 +23,8 @@ export default class Draw {
     this.ctx.save();
     this.ctx.beginPath();
     this.ctx.arc(position.x, position.y, radius, 0, Math.PI * 2, true);
-    this.ctx.fillStyle = color;
-    this.ctx.fill();
+    this.ctx.strokeStyle = color;
+    this.ctx.stroke();
     this.ctx.closePath();
     this.ctx.restore();
   };

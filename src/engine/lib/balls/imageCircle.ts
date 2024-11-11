@@ -30,10 +30,7 @@ export default class ImageCircle extends RigidBody {
      */
 
     this.update = (deltaTime: number) => {
-      if (
-        this.shape.collisionTime + 12 /** registry.engine.collisionCache.cooldown * 2 */ >
-        registry.gameTime
-      ) {
+      if (this.state !== 'idle' && this.stunDuration > 0) {
         originalUpdate(0);
         return;
       }
@@ -44,11 +41,9 @@ export default class ImageCircle extends RigidBody {
      * image circle의 draw 로직은 테스트중이며 전체 game object의 기본 draw 로직으로 적용될 예정입니다.
      */
     this.shape.draw = () => {
-      if (
-        this.shape.collisionTime + 12 /** registry.engine.collisionCache.cooldown  */ >
-        registry.gameTime
-      ) {
+      if (this.state !== 'idle' && this.stunDuration > 0) {
         registry.engine.drawUtils.drawCircle(this.shape.centroid, 25, 'white');
+        if (--this.stunDuration === 0) this.state = 'idle';
         return;
       }
 
@@ -64,7 +59,6 @@ export default class ImageCircle extends RigidBody {
         this.shape.centroid,
         rotateVector(new Vector({ x: 25, y: 25 }), newAngle),
       );
-      // registry.sprite.drawSprite(this.shape.orientation, newStart);
       registry.animation.drawAnimation(this.state, this.frameNumber, newAngle, newStart);
 
       // loop & charactor state logic
@@ -87,7 +81,7 @@ export default class ImageCircle extends RigidBody {
   }
 
   onDamage = (damage: number, point: Vector) => {
-    // this.state = 'damage';
+    this.state = 'damage';
     this.stunDuration = 12;
     this.hp -= damage;
 
