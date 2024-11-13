@@ -2,6 +2,9 @@ import Particle from '@engine/lib/particle/particle';
 import Vector from '@engine/lib/vector';
 import Grid from './grid';
 
+/**
+ * @warning deprecated
+ */
 export default class FluidHashGrid extends Grid {
   hashMap: Map<number, Particle[]>;
   hashMapSize: number;
