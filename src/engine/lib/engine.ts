@@ -373,7 +373,6 @@ export default class Engine {
 
     //   this.drawUtils.fillCircle(new Vector({ x: cells[i + 1], y: cells[i + 2] }), 5, 'blue');
     // }
-    // registry.sprite.drawSprite();
 
     this.skillEffect.active.forEach((activeSkill) => {
       activeSkill.frameShape.forEach((effect) => {

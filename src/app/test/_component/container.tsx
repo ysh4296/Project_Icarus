@@ -12,9 +12,9 @@ import useGamePhaseStore from 'store/gamePhase';
 import useMouseStore from 'store/mouseStore';
 import main, { registry } from '../../../engine/lib/main';
 import init from '../../../../rust-module/pkg/rust_module';
-import Sprite from '@engine/utils/sprite';
 import Animation from '@engine/utils/animation';
 import { initSkillData } from '@engine/lib/game/data/skillData';
+import { initSpriteData } from '@engine/lib/game/data/spriteData';
 
 const Container = () => {
   const { setMouseEventType } = useMouseStore();
@@ -24,15 +24,12 @@ const Container = () => {
     if (document) {
       init().then(async (wasm) => {
         await initSkillData();
+        initSpriteData();
         registry.memory = wasm.memory;
-
-        const sprite = new Sprite();
         const animation = new Animation();
-        registry.sprite = sprite;
-        await sprite.init();
+        registry.animation = animation;
 
         await animation.init();
-        registry.animation = animation;
 
         main(document, setMouseEventType);
       });

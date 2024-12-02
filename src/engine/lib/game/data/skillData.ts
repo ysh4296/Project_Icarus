@@ -18,7 +18,7 @@ export const initSkillData = () => {
 
   skillFrame.push([
     new Frame(
-      0,
+      SKILL.HORIZONTAL_SLASH,
       0,
       6,
       [{ x: -50, y: 85, width: 20, height: 50 }],
@@ -32,7 +32,7 @@ export const initSkillData = () => {
       new Vector({ x: -100, y: 160 }),
     ),
     new Frame(
-      0,
+      SKILL.HORIZONTAL_SLASH,
       6,
       6,
       [
@@ -50,7 +50,7 @@ export const initSkillData = () => {
       new Vector({ x: -100, y: 160 }),
     ),
     new Frame(
-      0,
+      SKILL.HORIZONTAL_SLASH,
       12,
       12,
       [
@@ -67,7 +67,7 @@ export const initSkillData = () => {
       new Vector({ x: -100, y: 160 }),
     ),
     new Frame(
-      0,
+      SKILL.HORIZONTAL_SLASH,
       24,
       6,
       [{ x: 50, y: 80, width: 20, height: 20 }],
@@ -81,7 +81,7 @@ export const initSkillData = () => {
       new Vector({ x: -100, y: 160 }),
     ),
     new Frame(
-      0,
+      SKILL.HORIZONTAL_SLASH,
       30,
       6,
       [],

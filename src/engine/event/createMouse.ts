@@ -10,6 +10,8 @@ import Charactor from '@engine/lib/game/charactor';
 import Circle from '@engine/lib/rigidbody/circle';
 import { skillData } from '@engine/lib/game/data/skillData';
 import { SKILL } from '@engine/lib/enum/skill';
+import { spriteData } from '@engine/lib/game/data/spriteData';
+import { CHARACTOR } from '@engine/lib/enum/charactor';
 
 export default class CreateMouse {
   start: Vector;
@@ -112,7 +114,8 @@ export default class CreateMouse {
           magician,
         );
         magician.shape.draw = () => {
-          registry.sprite.newDrawSprite(magician, spriteConfiguration);
+          spriteData[CHARACTOR.GNOME_MAGE]?.newDrawSprite(magician, spriteConfiguration);
+
           registry.engine.drawUtils.drawPoint(
             magician.shape.centroid,
             magicianCharactor.skill.limit,

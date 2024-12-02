@@ -12,20 +12,18 @@ import Vector, { addVector, rotateVector, subVector } from '@engine/lib/vector';
 
 export default class Sprite {
   spriteSheet: HTMLImageElement;
-  skillSpriteSheet: HTMLImageElement;
   constructor() {
     this.spriteSheet = new Image();
-    this.skillSpriteSheet = new Image();
   }
 
   // 비동기 초기화 메서드
-  async init(
-    src: string = '/Basic_Asset_Pack/Basic_Humanoid_Sprites/Basic Humanoid Sprites 4x.png',
-  ) {
+  async init(src: string) {
     this.spriteSheet.src = src;
-    this.skillSpriteSheet.src = '/skillEffect/Horizontal_Slash.png';
   }
 
+  /**
+   * @deprecated
+   */
   drawSprite(rotation?: number, translation?: Vector) {
     // 이미지가 로드된 후 작업을 진행
     const spriteWidth = 72; // 스프라이트의 너비
@@ -151,7 +149,7 @@ export default class Sprite {
     registry.engine.drawUtils.ctx.rotate(rotation);
     // registry.engine.drawUtils.ctx.strokeRect(0, 0, 200, 200);
     registry.engine.drawUtils.ctx.drawImage(
-      this.skillSpriteSheet,
+      this.spriteSheet,
       sx,
       sy,
       spriteWidth,

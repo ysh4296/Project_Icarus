@@ -3,7 +3,6 @@ import Animation from '@engine/utils/animation';
 import Draw from '@engine/utils/draw';
 import Engine from './engine';
 import Vector from './vector';
-import Sprite from '@engine/utils/sprite';
 import Monster from './component/defense/monster';
 
 /**
@@ -11,13 +10,11 @@ import Monster from './component/defense/monster';
  */
 export const registry: defaultRegistryType & {
   engine: Engine;
-  sprite: Sprite;
   animation: Animation;
 } = {
   createdId: 0,
   selectedObjectId: -1,
   engine: null as unknown as Engine,
-  sprite: null as unknown as Sprite,
   animation: null as unknown as Animation,
   mouseEventType: 'NONE',
   jointEventType: 'NONE',

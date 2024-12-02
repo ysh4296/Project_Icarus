@@ -1,20 +1,22 @@
+import { SKILL } from '@engine/lib/enum/skill';
 import { registry } from '@engine/lib/main';
 import Vector from '@engine/lib/vector';
 import Charactor from '../charactor';
+import { skillSpriteData } from '../data/spriteData';
 
 /**
  * activated skill frames
  */
 
 export default class Frame {
-  private skillId: number; // skill id
+  private skillId: SKILL; // skill id
   private spriteConfiguration: spriteConfiguration; // imformation for getting sprite
   effectRanges: EffectRange[];
   private startDelay: number; // frame will go to wait queue
   private duration: number; // frame will excute effect during duration
   private drawOffset: Vector;
   constructor(
-    skillId: number,
+    skillId: SKILL,
     startDelay: number,
     duration: number,
     effectRanges: EffectRange[],
@@ -45,7 +47,12 @@ export default class Frame {
     // this.effectRange.draw();
     // 스킬을 누가썼는지를 알아야 스킬을 어디에 배치할지를 알 수 있음
     if (!user) throw Error('noEntity');
-    registry.sprite.skillDraw(user, this.spriteConfiguration, target, this.drawOffset);
+    skillSpriteData[this.skillId]?.skillDraw(
+      user,
+      this.spriteConfiguration,
+      target,
+      this.drawOffset,
+    );
   }
 
   /**
