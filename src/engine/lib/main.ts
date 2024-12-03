@@ -1,5 +1,4 @@
 import { jsonData } from '@engine/levels/1-1';
-import Animation from '@engine/utils/animation';
 import Draw from '@engine/utils/draw';
 import Engine from './engine';
 import Vector from './vector';
@@ -10,12 +9,10 @@ import Monster from './component/defense/monster';
  */
 export const registry: defaultRegistryType & {
   engine: Engine;
-  animation: Animation;
 } = {
   createdId: 0,
   selectedObjectId: -1,
   engine: null as unknown as Engine,
-  animation: null as unknown as Animation,
   mouseEventType: 'NONE',
   jointEventType: 'NONE',
   createEventType: 'NONE',

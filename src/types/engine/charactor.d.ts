@@ -8,7 +8,7 @@ interface Sprite {
 }
 
 interface CharactorAnimationConfig {
-  graphic: string;
+  graphic: ANIMATION;
   frames: {
     [key in CharactorState]: (Sprite & { frameRate: number })[];
   };

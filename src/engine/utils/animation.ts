@@ -129,7 +129,6 @@ export default class Animation {
       50,
       50,
     );
-
     registry.engine.drawUtils.ctx.restore();
   }
 }

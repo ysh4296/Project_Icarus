@@ -2,8 +2,11 @@ import RigidBody from '@rigidbody/rigidbody';
 import Circle from '@engine/lib/rigidbody/circle';
 import Vector, { rotateVector, subVector } from '@engine/lib/vector';
 import { registry } from '@engine/lib/main';
+import { ANIMATION } from '../enum/animation';
+import { animationData } from '../game/data/animationData';
 
 export default class ImageCircle extends RigidBody {
+  graphic: ANIMATION;
   state: CharactorState;
   // animation: Animation;
   frameNumber: number;
@@ -16,6 +19,7 @@ export default class ImageCircle extends RigidBody {
       new Circle(new Vector({ x: position.x + Math.random() * 10 - 5, y: position.y }), 25, 'blue'),
       0.04,
     );
+    this.graphic = ANIMATION.FIREBALL;
     this.state = 'idle';
     this.hp = 200;
     this.frameNumber = 0;
@@ -59,19 +63,23 @@ export default class ImageCircle extends RigidBody {
         this.shape.centroid,
         rotateVector(new Vector({ x: 25, y: 25 }), newAngle),
       );
-      registry.animation.drawAnimation(this.state, this.frameNumber, newAngle, newStart);
-
+      animationData[this.graphic]?.drawAnimation(this.state, this.frameNumber, newAngle, newStart);
       // loop & charactor state logic
       this.frameOffset++;
+
+      // go next frame
       if (
         this.frameOffset ==
-        registry.animation.animationConfig.frames[this.state][this.frameNumber].frameRate
+        animationData[this.graphic]?.animationConfig.frames[this.state][this.frameNumber].frameRate
       ) {
         this.frameOffset = 0; // reset frameoffset
         // loop and nextframe
         this.frameNumber++;
 
-        if (this.frameNumber === registry.animation.animationConfig.frames[this.state].length) {
+        if (
+          this.frameNumber ===
+          animationData[this.graphic]?.animationConfig.frames[this.state].length
+        ) {
           // reset State
           if (this.state !== 'idle') this.state = 'idle';
           this.frameNumber = 0;
