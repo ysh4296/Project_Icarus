@@ -2,7 +2,7 @@ import Vector from '@engine/lib/vector';
 import Grid from './grid';
 import Shape from '@engine/lib/rigidbody/shape';
 import RigidBody from '@rigidbody/rigidbody';
-import { SkillFrame } from '@engine/utils/skillEffects';
+import { SkillFrame } from '@engine/effect/skillEffects';
 
 export default class HashGrid extends Grid {
   hashMap: Map<number, RigidBody[]>;

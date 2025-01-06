@@ -39,11 +39,11 @@ export default class DamageText {
     }
   }
 
-  addEvent() {
-    registry.engine.canvas.addEventListener('click', (e) => {
-      this.addDamageText(e.clientX, e.clientY, Math.floor(Math.random() * 100));
-    });
-  }
+  // addEvent() {
+  //   registry.engine.canvas.addEventListener('click', (e) => {
+  //     this.addDamageText(e.clientX, e.clientY, Math.floor(Math.random() * 100));
+  //   });
+  // }
 }
 
 // 데미지 텍스트 추가 (테스트용)
