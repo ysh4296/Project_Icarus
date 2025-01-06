@@ -1,11 +1,12 @@
 import Monster from '@engine/lib/component/defense/monster';
+import { SKILL } from '@engine/lib/enum/skill';
 import { registry } from '@engine/lib/main';
 import Vector, { subVector } from '@engine/lib/vector';
 import { Attribute } from '../attribute/attribute';
 import Charactor from '../charactor';
 
 export default class Skill {
-  public id: number;
+  public id: SKILL;
   public cost: number;
   public limit: number; // 스킬범위
   description?: string;

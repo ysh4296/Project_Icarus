@@ -7,7 +7,7 @@ import Skill from '../skill/skill';
 
 export const skillData: Skill[] = [];
 
-const skillFrame: Frame[][] = [];
+const skillFrame: Partial<Record<SKILL, Frame[]>> = {};
 
 export const initSkillData = () => {
   skillData.push(
@@ -16,7 +16,7 @@ export const initSkillData = () => {
       .addAttribute(BounceAttribute),
   );
 
-  skillFrame.push([
+  skillFrame[SKILL.HORIZONTAL_SLASH] = [
     new Frame(
       SKILL.HORIZONTAL_SLASH,
       0,
@@ -89,11 +89,11 @@ export const initSkillData = () => {
       },
       new Vector({ x: -100, y: 160 }),
     ),
-  ]);
+  ];
 
   skillData.forEach((skillData) => {
     if (skillData instanceof RangeSkill) {
-      skillData.setFrame(skillFrame[skillData.id]);
+      skillData.setFrame(skillFrame[skillData.id] ?? []);
     }
   });
 };
