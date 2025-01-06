@@ -7,7 +7,7 @@ interface Sprite {
   height: number;
 }
 
-interface CharactorAnimationConfig {
+interface AnimationConfig {
   graphic: ANIMATION;
   frames: {
     [key in CharactorState]: (Sprite & { frameRate: number })[];
@@ -20,7 +20,6 @@ interface CharactorAnimationConfig {
  * @type CharactorAnimationConfig
  */
 type spriteConfiguration = {
-  source: string;
   width: number;
   height: number;
   row: number;

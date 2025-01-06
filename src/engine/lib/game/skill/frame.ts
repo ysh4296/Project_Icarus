@@ -15,6 +15,12 @@ export default class Frame {
   private startDelay: number; // frame will go to wait queue
   private duration: number; // frame will excute effect during duration
   private drawOffset: Vector;
+
+  /**
+   * Create a copy of this Frame instance
+   * @param skillId skillId
+   * @returns {Frame}
+   */
   constructor(
     skillId: SKILL,
     startDelay: number,
@@ -53,21 +59,6 @@ export default class Frame {
       target,
       this.drawOffset,
     );
-  }
-
-  /**
-   * @deprecated
-   * when skill Frame conflict with charactor
-   * @param userId
-   * @param targetId
-   */
-  effect(userId: number, targetId: number) {
-    // this.skill.attributes?.forEach((attr) => {
-    //   /**
-    //    * skill attributes applied by user , target information
-    //    */
-    //   attr.apply(user, target);
-    // });
   }
 
   /**

@@ -23,7 +23,6 @@ export const initSkillData = () => {
       6,
       [{ x: -50, y: 85, width: 20, height: 50 }],
       {
-        source: '/skillEffect/Horizontal_Slash.png',
         width: 48,
         height: 48,
         row: 0,
@@ -41,7 +40,6 @@ export const initSkillData = () => {
         { x: 0, y: 0, width: 50, height: 20 },
       ],
       {
-        source: '/skillEffect/Horizontal_Slash.png',
         width: 48,
         height: 48,
         row: 0,
@@ -58,7 +56,6 @@ export const initSkillData = () => {
         { x: 35, y: 35, width: 20, height: 50 },
       ],
       {
-        source: '/skillEffect/Horizontal_Slash.png',
         width: 48,
         height: 48,
         row: 0,
@@ -72,7 +69,6 @@ export const initSkillData = () => {
       6,
       [{ x: 50, y: 80, width: 20, height: 20 }],
       {
-        source: '/skillEffect/Horizontal_Slash.png',
         width: 48,
         height: 48,
         row: 0,
@@ -86,7 +82,6 @@ export const initSkillData = () => {
       6,
       [],
       {
-        source: '/skillEffect/Horizontal_Slash.png',
         width: 48,
         height: 48,
         row: 0,

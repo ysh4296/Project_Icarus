@@ -8,7 +8,7 @@ import Vector from '@engine/lib/vector';
 
 export default class Animation {
   spriteSheet: HTMLImageElement;
-  animationConfig: CharactorAnimationConfig;
+  animationConfig: AnimationConfig;
 
   constructor() {
     this.spriteSheet = new Image();

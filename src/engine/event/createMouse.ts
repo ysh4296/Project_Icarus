@@ -91,7 +91,6 @@ export default class CreateMouse {
           new Circle(new Vector(this.target.shape.centroid), 25, 'blue'),
         );
         const spriteConfiguration: spriteConfiguration = {
-          source: 'charactor',
           width: 72,
           height: 72,
           row: 0,
