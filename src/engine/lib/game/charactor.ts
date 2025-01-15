@@ -2,7 +2,11 @@ import RigidBody from '../rigidbody/rigidbody';
 import Skill from './skill/skill';
 
 export default class Charactor {
-  public id: number; // charactorId / objectid?
+  /**
+   * @todo
+   * convert id to enum type
+   */
+  public id: number; // charactorId
   public stat: Stat;
   public battleStat: BattleStat;
   public skill: Skill;
@@ -25,11 +29,16 @@ export default class Charactor {
   }
 
   update() {
-    this.battleStat.MP += this.battleStat.MPRegen;
-    this.battleStat.HP += this.battleStat.HPRegen;
+    if (this.battleStat.Resource.MP < this.battleStat.MP) {
+      this.battleStat.Resource.MP += this.battleStat.MPRegen;
+    }
+    if (this.battleStat.Resource.HP < this.battleStat.HP) {
+      this.battleStat.Resource.HP += this.battleStat.HPRegen;
+    }
+
     if (this.skill.cost < this.battleStat.MP) {
       // execute Skill
-      if (this.skill.canApply()) {
+      if (this.skill.canApply(this)) {
         const target = this.skill.setTarget(this, this.skill.limit);
         if (target === null) return;
         this.skill.apply(this, target);
@@ -48,6 +57,10 @@ export default class Charactor {
       HP: stats.VIT * 10 + stats.STR * 5,
       HPRegen: stats.VIT * 0.2 + stats.SPI * 0.1,
       MP: stats.INT * 10 + stats.SPI * 5,
+      Resource: {
+        HP: stats.VIT * 10 + stats.STR * 5,
+        MP: 0,
+      },
       MPRegen: stats.SPI * 0.2 + stats.INT * 0.1,
       CoolDown: stats.AGI * 0.5 + stats.DEX * 0.3 + stats.LCK * 0.2,
     };

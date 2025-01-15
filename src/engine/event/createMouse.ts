@@ -113,15 +113,32 @@ export default class CreateMouse {
           magician,
         );
         magician.shape.draw = () => {
-          spriteData[CHARACTOR.GNOME_MAGE]?.newDrawSprite(magician, spriteConfiguration);
+          spriteData[CHARACTOR.GNOME_MAGE]?.drawSprite(magician, spriteConfiguration);
 
+          // draw
           registry.engine.drawUtils.drawPoint(
             magician.shape.centroid,
             magicianCharactor.skill.limit,
             'blue',
           );
+          // draw hp, mp bar
+          // draw resource effect
+
+          // magicianCharactor.battleStat.MP = 1000000;
+          const MPOffset =
+            magicianCharactor.battleStat.Resource.MP / magicianCharactor.battleStat.MP;
+          console.log('max mp  : ', magicianCharactor.battleStat.MP);
+
+          registry.engine.drawUtils.fillRect(
+            subVector(
+              magician.shape.centroid,
+              new Vector({ x: 25 + (-50 * MPOffset) / 2, y: -50 }),
+            ),
+            new Vector({ x: 50 * MPOffset, y: 10 }),
+            'green',
+          );
         };
-        // magicianCharactor.battleStat.MP = 1000000;
+
         registry.engine.charactorMap.set(magician.id, magicianCharactor);
         break;
       default:

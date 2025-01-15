@@ -21,6 +21,14 @@ interface BattleStat {
   HPRegen: number;
   MP: number;
   MPRegen: number;
+  /**
+   * @param Resource
+   * currunt remaining resource at game
+   */
+  Resource: {
+    HP: BattleStat['HP'];
+    MP: BattleStat['MP'];
+  };
   CoolDown: number;
 }
 

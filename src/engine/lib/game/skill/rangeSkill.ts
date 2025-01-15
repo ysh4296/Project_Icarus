@@ -10,7 +10,7 @@ export default class RangeSkill extends Skill {
   frames: Frame[];
 
   constructor(id: number, limit: number) {
-    super(id);
+    super(id, 25);
     this.frames = [];
     this.limit = limit;
   }

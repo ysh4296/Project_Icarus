@@ -13,19 +13,26 @@ export default class Skill {
   public attributes: Attribute[]; // special traits for skill use it with apply
   user: any;
 
-  constructor(id: number) {
+  /**
+   * skills have following data
+   * @param id unique id for skill
+   * @param cost cost to use skill
+   * @param limit range limit to use skill
+   */
+  constructor(id: number, cost: number = 200, limit: number = 10000) {
     this.id = id;
-    this.cost = 20;
-    this.limit = 10000;
+    this.cost = cost;
+    this.limit = limit;
     this.attributes = [];
   }
 
-  canApply(): boolean {
+  canApply(user: Charactor): boolean {
+    if (user.battleStat.Resource.MP < this.cost) return false;
     return true;
   }
 
   apply(user: Charactor, target: Vector) {
-    user.battleStat.MP -= this.cost;
+    user.battleStat.Resource.MP -= this.cost;
     /**
      * @todo
      * Range Skill: add skill Frame

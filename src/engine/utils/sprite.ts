@@ -21,41 +21,7 @@ export default class Sprite {
     this.spriteSheet.src = src;
   }
 
-  /**
-   * @deprecated
-   */
-  drawSprite(rotation?: number, translation?: Vector) {
-    // 이미지가 로드된 후 작업을 진행
-    const spriteWidth = 72; // 스프라이트의 너비
-    const spriteHeight = 72; // 스프라이트의 높이
-    const spriteIndex = 8;
-    const columns = 5; // 스프라이트 시트의 열 수
-
-    const col = spriteIndex % columns;
-    const row = Math.floor(spriteIndex / columns);
-
-    const sx = col * spriteWidth;
-    const sy = row * spriteHeight;
-    registry.engine.drawUtils.ctx.save();
-    if (translation) registry.engine.drawUtils.ctx.translate(translation.x, translation.y);
-    if (rotation) registry.engine.drawUtils.ctx.rotate(rotation);
-
-    registry.engine.drawUtils.ctx.drawImage(
-      this.spriteSheet,
-      sx,
-      sy,
-      spriteWidth,
-      spriteHeight,
-      0,
-      0,
-      50,
-      50,
-    );
-
-    registry.engine.drawUtils.ctx.restore();
-  }
-
-  newDrawSprite(object: RigidBody, spriteConfiguration: spriteConfiguration) {
+  drawSprite(object: RigidBody, spriteConfiguration: spriteConfiguration) {
     // 이미지가 로드된 후 작업을 진행
     const spriteWidth = spriteConfiguration.width; // 스프라이트의 너비
     const spriteHeight = spriteConfiguration.height; // 스프라이트의 높이
@@ -97,6 +63,13 @@ export default class Sprite {
     registry.engine.drawUtils.ctx.restore();
   }
 
+  /**
+   * draw skill from user position
+   * @param user who uses this skill
+   * @param spriteConfiguration spriteConfiguration for skill
+   * @param target direction for target
+   * @param drawOffset move offset for skill point
+   */
   skillDraw(
     user: Charactor,
     spriteConfiguration: spriteConfiguration,

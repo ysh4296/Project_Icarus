@@ -206,6 +206,7 @@ export default class Engine {
       });
     }
 
+    // check if skill affects to any object (charactor or monster)
     this.skillEffect.active.forEach((activeSkill) => {
       activeSkill.frameShape.forEach((effect) => {
         const neighbors = this.grid.getNeighborSkill(effect);

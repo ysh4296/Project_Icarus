@@ -42,7 +42,8 @@ const main = (document: Document, setMouseEventType: (mouseType: MouseType) => v
     registry.engine = new Engine(
       canvas,
       ctx,
-      new Vector({ x: window.innerWidth, y: window.innerHeight }),
+      // new Vector({ x: window.innerWidth, y: window.innerHeight }),
+      new Vector({ x: 500, y: 800 }),
     );
     currentTime = performance.now();
     registry.setMouseEventType = (mouseType) => {
