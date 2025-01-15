@@ -12,6 +12,11 @@ export default class Grid {
   drawUtils: Draw;
   calculatorUtils: Calculator;
 
+  /**
+   * @description
+   * to make pillball like gameboard i did some hard coded implementation
+   */
+
   constructor(cellSize: number) {
     this.world = new Vector({ x: 0, y: 0 });
     this.cellSize = cellSize;
@@ -45,14 +50,21 @@ export default class Grid {
   }
 
   getCellIdFromPosition(pos: Vector) {
-    let x = parseInt(String(pos.x / this.cellSize));
     let y = parseInt(String(pos.y / this.cellSize));
+    /**
+     * @description
+     * 홀수/짝수 행에 따라 X축 보정
+     */
+    let offsetX = y % 2 === 0 ? -this.cellSize / 2 : 0;
+    let x = parseInt(String((pos.x - offsetX) / this.cellSize));
     return x + y * this.cellCntX;
   }
 
   cellIdToCenteroid(cellId: number) {
     return new Vector({
-      x: this.cellSize * ((cellId % this.cellCntX) + 0.5),
+      x:
+        this.cellSize * ((cellId % this.cellCntX) + 0.5) +
+        (((cellId / this.cellCntX) | 0) % 2 === 0 ? -this.cellSize / 2 : 0),
       y: this.cellSize * (((cellId / this.cellCntX) | 0) + 0.5),
     });
   }
@@ -61,7 +73,7 @@ export default class Grid {
     for (let i = 0; i < this.cellCntX; i++) {
       for (let j = 0; j < this.cellCntY; j++) {
         let position = new Vector({
-          x: (i + 0.5) * this.cellSize,
+          x: (i + 0.5) * this.cellSize + (j % 2 === 0 ? -this.cellSize / 2 : 0),
           y: (j + 0.5) * this.cellSize,
         });
 
