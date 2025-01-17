@@ -1,3 +1,5 @@
 export enum ANIMATION {
   FIREBALL,
+  GOBLIN_FIGHTER,
+  GOBLIN_OCULTIST,
 }

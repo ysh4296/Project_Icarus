@@ -1,101 +1,23 @@
 import { registry } from '@engine/lib/main';
 import Vector from '@engine/lib/vector';
 
-/**
- * @todo
- * 필요한만큼 animation 선언 가능하도록 변경
- */
-
 export default class Animation {
   spriteSheet: HTMLImageElement;
   animationConfig: AnimationConfig;
 
-  constructor() {
+  constructor(animationConfig: AnimationConfig) {
     this.spriteSheet = new Image();
 
     /**
      * @todo
-     * read json Data
+     * unused variable initialize it with init() function
      */
-    this.animationConfig = {
-      graphic: 'Fireball',
-      frames: {
-        idle: [
-          {
-            x: 0,
-            y: 0,
-            width: 16,
-            height: 16,
-            frameRate: 10,
-          },
-          {
-            x: 16,
-            y: 0,
-            width: 16,
-            height: 16,
-            frameRate: 10,
-          },
-          {
-            x: 32,
-            y: 0,
-            width: 16,
-            height: 16,
-            frameRate: 10,
-          },
-          {
-            x: 48,
-            y: 0,
-            width: 16,
-            height: 16,
-            frameRate: 10,
-          },
-          {
-            x: 64,
-            y: 0,
-            width: 16,
-            height: 16,
-            frameRate: 10,
-          },
-          {
-            x: 80,
-            y: 0,
-            width: 16,
-            height: 16,
-            frameRate: 10,
-          },
-          {
-            x: 96,
-            y: 0,
-            width: 16,
-            height: 16,
-            frameRate: 10,
-          },
-          {
-            x: 112,
-            y: 0,
-            width: 16,
-            height: 16,
-            frameRate: 10,
-          },
-        ],
-        damage: [
-          {
-            x: 128,
-            y: 0,
-            width: 64,
-            height: 64,
-            frameRate: 5,
-          },
-        ],
-        skill: [],
-      },
-    };
+    this.animationConfig = animationConfig;
   }
 
   // 비동기 초기화 메서드
-  async init(src: string = '/animation/Fireball.png') {
+  async init(src: string) {
     this.spriteSheet.src = src;
-
     await this.loadImage(this.spriteSheet);
   }
 
@@ -110,6 +32,8 @@ export default class Animation {
   drawAnimation(
     state: CharactorState,
     frameNumber: number,
+    dw: number,
+    dh: number,
     rotation?: number,
     translation?: Vector,
   ) {
@@ -126,8 +50,8 @@ export default class Animation {
       sprite.height,
       0,
       0,
-      50,
-      50,
+      dw,
+      dh,
     );
     registry.engine.drawUtils.ctx.restore();
   }

@@ -76,7 +76,7 @@ export default class CreateMouse {
         const circle = new RigidBody(
           new Circle(
             new Vector(this.target.shape.centroid),
-            registry.engine.GameBoard.cellSize / 4,
+            registry.engine.GameBoard.cellSize / 8,
             'green',
           ),
           0,

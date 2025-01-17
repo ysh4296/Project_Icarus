@@ -354,6 +354,11 @@ export default class Engine {
     this.objects.forEach((object) => {
       object.shape.draw();
       object.shape.calculateBoundingBox();
+
+      /**
+       * @todo
+       * its dev mode delete boundingbox drawing
+       */
       object.shape.boundingBox.draw();
     });
     this.objects.forEach((component) => {

@@ -3,6 +3,7 @@ import Draw from '@engine/utils/draw';
 import Engine from './engine';
 import Vector from './vector';
 import Monster from './component/defense/monster';
+import { ANIMATION } from './enum/animation';
 
 /**
  * to use Engine as class Type the type hasbeen added seperatly from default Registry type
@@ -58,7 +59,7 @@ const main = (document: Document, setMouseEventType: (mouseType: MouseType) => v
         const object = levelData.shift();
         if (object) {
           for (let i = 0; i < object.numbers; i++) {
-            const monster = new Monster(object.position, 20000);
+            const monster = new Monster(ANIMATION.GOBLIN_OCULTIST, object.position, 20000, 20);
             registry.engine.objects.push(monster);
           }
         }

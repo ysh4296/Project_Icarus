@@ -8,18 +8,23 @@ import { animationData } from '../game/data/animationData';
 export default class ImageCircle extends RigidBody {
   graphic: ANIMATION;
   state: CharactorState;
-  // animation: Animation;
   frameNumber: number;
   frameOffset: number;
   stunDuration: number;
   hp: number;
+  radius: number;
 
-  constructor(position: Vector) {
+  constructor(graphic: ANIMATION, position: Vector, radius: number) {
     super(
-      new Circle(new Vector({ x: position.x + Math.random() * 10 - 5, y: position.y }), 25, 'blue'),
+      new Circle(
+        new Vector({ x: position.x + Math.random() * 10 - 5, y: position.y }),
+        radius,
+        'blue',
+      ),
       0.04,
     );
-    this.graphic = ANIMATION.FIREBALL;
+    this.radius = radius;
+    this.graphic = graphic;
     this.state = 'idle';
     this.hp = 200;
     this.frameNumber = 0;
@@ -46,24 +51,33 @@ export default class ImageCircle extends RigidBody {
      */
     this.shape.draw = () => {
       if (this.state !== 'idle' && this.stunDuration > 0) {
-        registry.engine.drawUtils.drawCircle(this.shape.centroid, 25, 'white');
+        registry.engine.drawUtils.drawCircle(this.shape.centroid, this.radius, 'white');
         if (--this.stunDuration === 0) this.state = 'idle';
         return;
       }
 
       let newAngle: number = 0;
 
-      if (this.velocity.length() > 10) {
-        newAngle = registry.engine.calculatorUtils.getAngleBetweenVectors(
-          new Vector({ x: 0, y: 1 }),
-          this.velocity,
-        );
-      }
+      // if (this.velocity.length() > 10) {
+      //   newAngle = registry.engine.calculatorUtils.getAngleBetweenVectors(
+      //     new Vector({ x: 0, y: 1 }),
+      //     this.velocity,
+      //   );
+      // }
+      newAngle = this.shape.orientation;
+
       const newStart = subVector(
         this.shape.centroid,
-        rotateVector(new Vector({ x: 25, y: 25 }), newAngle),
+        rotateVector(new Vector({ x: this.radius, y: this.radius }), newAngle),
       );
-      animationData[this.graphic]?.drawAnimation(this.state, this.frameNumber, newAngle, newStart);
+      animationData[this.graphic]?.drawAnimation(
+        this.state,
+        this.frameNumber,
+        this.radius * 2,
+        this.radius * 2,
+        newAngle,
+        newStart,
+      );
       // loop & charactor state logic
       this.frameOffset++;
 
